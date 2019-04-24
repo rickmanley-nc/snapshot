@@ -1,0 +1,8 @@
+#ansible-playbook -u root configure.yml -k
+---
+- hosts: c-webapp
+  name: Post deploy configuration
+  roles:
+    - register
+#    - firewall
+    - configure

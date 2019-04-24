@@ -1,0 +1,9 @@
+#ansible-playbook -u root update.yml -k
+---
+- hosts: c-webapp
+  name: Update c-webapp to v2
+
+  tasks:
+    - name: check for existing snapshot for c-webapp-1, fail if no snapshot exists
+    - name: check for web app response, v1 or v2. contine on v1, fail on v2
+    - name: Move index-update.html to index.html (overwriting the existing content of index.html)

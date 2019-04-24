@@ -1,0 +1,78 @@
+---
+- name: SELinux permissive (to allow mounting volume in container)
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: install npm and docker
+  package:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - npm
+    - docker
+
+- name: make webapp directory
+  file:
+    path: /root/webapp
+    state: directory
+    mode: 0777
+
+- name: Copy app.js, Dockerfile, and package.json
+  copy:
+    src: "{{item}}"
+    dest: /root/webapp/{{item}}
+    mode: 0664
+  with_items:
+    - app.js
+    - Dockerfile
+    - package.json
+
+- name: make static directory
+  file:
+    path: /root/webapp/static
+    state: directory
+    mode: 0777
+
+- name: Copy raptorize and index files to static
+  copy:
+    src: "{{item}}"
+    dest: /root/webapp/static/{{item}}
+    mode: 0664
+  with_items:
+    - index.html
+    - index-update.html
+    - jquery-1.4.1.min.js
+    - jquery.raptorize.1.0.js
+    - raptor-psd.psd
+    - raptor-sound.mp3
+    - raptor-sound.ogg
+    - raptor.png
+
+- name: Execute npm install
+  shell: cd /root/webapp && npm install
+
+- name: change permissions on node_modules directory (permissions incorrect when run through ansible, this is a workaround)
+  file:
+    path: /root/webapp/node_modules
+    state: directory
+    mode: 0777
+    recurse: yes
+
+- name: start and enable docker daemon
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: login to RH registry
+  command: docker login registry.access.redhat.com -u {{access_redhat_username}} -p {{access_redhat_password}}
+
+- name: pull nodejs-10 image
+  command: docker pull registry.access.redhat.com/rhoar-nodejs/nodejs-10
+
+- name: build image
+  command: docker build -t registry.access.redhat.com/rhoar-nodejs/nodejs-10:latest /root/webapp
+
+- name: run container
+  command: docker run --restart=always --network=host -d --name my-container -v /root/webapp:/app registry.access.redhat.com/rhoar-nodejs/nodejs-10

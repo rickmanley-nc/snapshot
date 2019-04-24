@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>RHHI-V</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <script src="/static/jquery-1.4.1.min.js"></script>
+  <script src="/static/jquery.raptorize.1.0.js"></script>
+        <!-- For the button version -->
+  <script type="text/javascript">
+  $(window).load(function() {
+    $('.button').raptorize();
+  });
+  </script>
+        <!-- For the Timer version -->
+  <script type="text/javascript">
+  $(window).load(function() {
+    $('.button').raptorize({
+      'enterOn' : 'timer',
+      'delayTime' : 3000
+    });
+  });
+  </script>
+<style>
+body {
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    font-size: 200%;
+}
+footer {
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    font-size: 75%;
+}
+img {
+    margin: 0 auto;
+}
+  </style>
+</head>
+<body>
+  <h1>This is a fancy web application, version 2.0</h1>
+<div class="container">
+    <img src="/static/raptor.png" width="75%"/>
+</div>
+<footer>
+  <p><a href="#" class="button">Click me</a> for dinosaur.</p>
+  <p>Running on Red Hat Hyperconverged Infrastructure</p>
+</footer>
+</body>
+</html>
