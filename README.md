@@ -16,11 +16,16 @@ From here, we copy the OVA into the Ravello environment and make a blueprint, al
 
 ### General Steps and Requirements
 
-existing RHHI deployment for verification
+Required:
+ - RHHI / RHV environment
+ - RHEL 7.6 kvm guest template
+ - Controller node updated with correct IP/hostnames for 'c-webapp' group in the /etc/ansible/hosts
 
-deploy
-configure
-verify
-export
+1. ansible-playbook deploy.yml
+2. ansible-playbook -u root configure.yml -k
+3. take snapshot
+4. ansible-playbook -u root update.yml -k
+5. revert to old snapshot
+
 
 ### Part of the Big Picture series

@@ -65,9 +65,6 @@
     state: started
     enabled: yes
 
-- name: login to RH registry
-  command: docker login registry.access.redhat.com -u {{access_redhat_username}} -p {{access_redhat_password}}
-
 - name: pull nodejs-10 image
   command: docker pull registry.access.redhat.com/rhoar-nodejs/nodejs-10
 

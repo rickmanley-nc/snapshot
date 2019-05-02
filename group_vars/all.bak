@@ -7,7 +7,3 @@ repo_list:
   - rhel-7-server-rpms
   - rhel-7-server-extras-rpms
   - rhel-7-server-rhoar-nodejs-10-rpms
-
-#used by 'configure' role
-acess_redhat_username: <>
-access_redhat_password: <>

@@ -1,9 +1,35 @@
 #ansible-playbook -u root update.yml -k
 ---
+#- hosts: localhost
+#  name: check for snapshot
+#
+#  tasks:
+#    - name: Login to RHV
+#      ovirt_auth:
+#        url: https://rhvm.rnelson-demo.com/ovirt-engine/api
+#        insecure: yes
+#        username: admin@internal
+#        password: RedHat1!
+
+# Using the fetch_nested, we can see the snapshot exists under the vm.initialization.configuration ovf:id=.
+# But it's not obvious that the id shown is the actual snapshot.
+# The ovirt_snapshot module looks like it will always create, restore or delete the snapshot unless you specify the snapshot_id.
+#
+#    - name: check for existing snapshot for c-webapp-1, fail if no snapshot exists
+#      ovirt_vm:
+#        auth: "{{ ovirt_auth }}"
+#        name: c-webapp-1
+#        fetch_nested: true
+#
+#    - name: Cleanup RHV auth token
+#      ovirt_auth:
+#        ovirt_auth: "{{ ovirt_auth }}"
+#        state: absent
+#
 - hosts: c-webapp
-  name: Update c-webapp to v2
+  name: check for version and update
 
   tasks:
-    - name: check for existing snapshot for c-webapp-1, fail if no snapshot exists
-    - name: check for web app response, v1 or v2. contine on v1, fail on v2
+#    - name: check for web app response, v1 or v2. contine on v1, fail on v2
     - name: Move index-update.html to index.html (overwriting the existing content of index.html)
+      command: mv /root/webapp/static/index-update.html /root/webapp/static/index.html
